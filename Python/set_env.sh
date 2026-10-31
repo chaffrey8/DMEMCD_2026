@@ -1,0 +1,1 @@
+export OLIST_DATA_DIR="/Users/davidmoreno/Documents/UNAM/Diplomados/DMEMCDM/Diplomado_2026/DMEMCD_2026/work-at-olist-data/datasets"
