@@ -19,9 +19,12 @@ desktop.ini
 # Archivos de configuración local
 .env
 
-# Datos privados o demasiado grandes
-data/raw/
-data/external/
+# Datos originales y externos
+data/raw/*
+!data/raw/.gitkeep
+
+data/external/*
+!data/external/.gitkeep
 
 # Modelos generados
 models/*.pkl
