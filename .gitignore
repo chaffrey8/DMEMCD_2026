@@ -1,0 +1,28 @@
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+
+# Configuración de Jupyter
+.ipynb_checkpoints/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de configuración local
+.env
+
+# Datos privados o demasiado grandes
+data/raw/
+data/external/
+
+# Modelos generados
+models/*.pkl
+models/*.joblib
