@@ -29,3 +29,23 @@ data/external/*
 # Modelos generados
 models/*.pkl
 models/*.joblib
+
+# Archivos generados automáticamente
+data/processed/ratings_enriched.csv
+data/processed/tags_enriched.csv
+
+# Versiones parquet
+data/processed/ratings_enriched.parquet
+data/processed/tags_enriched.parquet
+
+# Datasets parquet fragmentados
+data/processed/ratings_enriched_parquet/
+data/processed/tags_enriched_parquet/
+
+# Archivos enriquecidos muy grandes
+data/processed/ratings_enriched.csv
+data/processed/tags_enriched.csv
+
+# Posibles versiones futuras
+data/processed/*enriched*.parquet
+data/processed/*_parquet/

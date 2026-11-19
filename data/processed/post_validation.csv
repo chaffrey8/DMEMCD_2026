@@ -1,0 +1,7 @@
+test,passed
+movieId único en movies_consolidated,True
+Se preservó el total de películas,True
+Combinación movieId-genre única,True
+Géneros vinculados a películas existentes,True
+Agregado de ratings reconcilia con ratings original,True
+Agregado de tags reconcilia con tags original,True

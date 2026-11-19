@@ -1,0 +1,15 @@
+dataset,column,dtype,non_null,nulls,null_pct,unique_non_null
+movies,movieId,int32,87585,0,0.0,87585
+movies,title,string,87585,0,0.0,87382
+movies,genres,string,87585,0,0.0,1798
+ratings,userId,int32,32000204,0,0.0,200948
+ratings,movieId,int32,32000204,0,0.0,84432
+ratings,rating,float32,32000204,0,0.0,10
+ratings,timestamp,int64,32000204,0,0.0,25976523
+tags,userId,int32,2000072,0,0.0,15848
+tags,movieId,int32,2000072,0,0.0,51323
+tags,tag,string,2000055,17,0.0008499694011015604,140979
+tags,timestamp,int64,2000072,0,0.0,1291250
+links,movieId,int32,87585,0,0.0,87585
+links,imdbId,Int64,87585,0,0.0,87585
+links,tmdbId,Int64,87461,124,0.1415767540103899,87425
