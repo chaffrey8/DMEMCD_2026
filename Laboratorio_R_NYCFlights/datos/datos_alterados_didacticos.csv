@@ -1,0 +1,12 @@
+id,origin,carrier,dep_delay,nota
+1, JFK ,AA,15,espacios
+2,jfk, dl ,,ausente
+3,LGA,UA,-4,adelanto
+4, ewr ,AA,120,extremo legitimo
+5,EWR,ua,8,minusculas
+6,LGA,DL,22,registro
+6,LGA,DL,22,duplicado por id
+7,JFK,AA,error,tipo inconsistente
+8,LGA,UA,0,sin retraso
+9,EWR,DL,47,registro
+10,JFK,UA,NA,ausencia textual
