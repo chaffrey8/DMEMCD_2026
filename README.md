@@ -36,11 +36,17 @@ Análisis del entregable, en la raíz:
 | --- | --- |
 | [`eda_olist.ipynb`](eda_olist.ipynb) | Análisis completo, con tablas y figuras ya ejecutadas. Es el archivo que hay que volver a correr. |
 | [`eda.ipynb`](eda.ipynb) | Entregas tardías y nota de la reseña. |
-| [`Proyecto_JM.ipynb`](Proyecto_JM.ipynb) | Precio, flete y vendedores. |
-| [`Proyecto_Angel.ipynb`](Proyecto_Angel.ipynb) | Órdenes, pagos, productos, regiones y distancia. Versión en Python de [`Proyecto_Final_Olist_FINAL.Rmd`](Proyecto_Final_Olist_FINAL.Rmd). |
-| [`Proyecto_Eduardo.ipynb`](Proyecto_Eduardo.ipynb) | Lectura inicial de clientes, geolocalización, productos y vendedores. |
 | [`Python/requirements.txt`](Python/requirements.txt) | Dependencias de Python. |
-| [`Python/olist_tools.py`](Python/olist_tools.py) | Lectura de tablas. La usan `Proyecto_JM.ipynb` y `Proyecto_Eduardo.ipynb`. `eda_olist.ipynb` lee los CSV con pandas. |
+| [`Python/olist_tools.py`](Python/olist_tools.py) | Lectura de tablas. La usan los cuadernos de Juan Manuel y Eduardo. `eda_olist.ipynb` lee los CSV con pandas. |
+
+Análisis preliminares, en [`edas_preliminares/`](edas_preliminares):
+
+| Archivo | Qué contiene |
+| --- | --- |
+| [`edas_preliminares/Proyecto_JM.ipynb`](edas_preliminares/Proyecto_JM.ipynb) | Precio, flete y vendedores. |
+| [`edas_preliminares/Proyecto_Angel.ipynb`](edas_preliminares/Proyecto_Angel.ipynb) | Órdenes, pagos, productos, regiones y distancia. Versión en Python de [`edas_preliminares/Proyecto_Final_Olist_FINAL.Rmd`](edas_preliminares/Proyecto_Final_Olist_FINAL.Rmd). |
+| [`edas_preliminares/Proyecto_Eduardo.ipynb`](edas_preliminares/Proyecto_Eduardo.ipynb) | Lectura inicial de clientes, geolocalización, productos y vendedores. |
+| [`edas_preliminares/Proyecto_Final_Olist_FINAL.Rmd`](edas_preliminares/Proyecto_Final_Olist_FINAL.Rmd) | Análisis de órdenes en R. Al correrlo, las tablas exportadas quedan en `edas_preliminares/SALIDAS/`. |
 
 `Python/eda.ipynb`, `Python/eda_atraso.ipynb` y `Python/eda_espera.ipynb` son borradores del análisis de entregas. El resto de `Python/` (sesiones, ejercicios, ...) es material de clase del diplomado y no forma parte de este análisis.
 
@@ -71,9 +77,9 @@ jupyter nbconvert --to notebook --execute --inplace eda_olist.ipynb
 
 También se puede abrir `eda_olist.ipynb` en Jupyter y ejecutar todas las celdas, con el directorio de trabajo en la raíz del repositorio. La libreta busca los nueve CSV en este orden: la variable `OLIST_DATA_DIR`, `~/projects/work-at-olist-data/datasets` y carpetas hermanas del directorio de trabajo. Al terminar, la sección **Conclusión** imprime tres validaciones. Si una cifra deja de cumplirse, la celda se detiene.
 
-Las salidas ya guardadas en `eda_olist.ipynb` se leen sin volver a ejecutar. `Proyecto_JM.ipynb` y `Proyecto_Eduardo.ipynb` usan el mismo directorio de datos e importan `olist_tools` desde `Python/`.
+Las salidas ya guardadas en `eda_olist.ipynb` se leen sin volver a ejecutar. `edas_preliminares/Proyecto_JM.ipynb` y `edas_preliminares/Proyecto_Eduardo.ipynb` usan el mismo directorio de datos e importan `olist_tools` desde `Python/`. El kernel puede arrancar en la raíz del repositorio o dentro de `edas_preliminares/`.
 
-`Proyecto_Final_Olist_FINAL.Rmd` es el script original en R del análisis de órdenes. Sus `read_csv` apuntan a un disco local de Windows. Para correrlo hay que sustituir esas rutas por la carpeta `datasets` y tener instalados `tidyverse`, `readr`, `ggplot2`, `data.table` y `openxlsx`. La reproducción que cierra con las validaciones es la de Python.
+`edas_preliminares/Proyecto_Final_Olist_FINAL.Rmd` es el script original en R del análisis de órdenes. Busca los CSV con la misma regla que las libretas y escribe sus tablas en `edas_preliminares/SALIDAS/`. Para correrlo en RStudio hacen falta `tidyverse`, `readr`, `ggplot2`, `data.table` y `openxlsx`. La reproducción que cierra con las validaciones es la de Python.
 
 ## Dependencias
 
@@ -190,8 +196,8 @@ El historial de git concentra las subidas en una cuenta. Esta tabla sigue el cua
 
 | Integrante | Aporte en el repositorio |
 | --- | --- |
-| Juan Alberto Jaimes Romero | Pregunta de entregas tardías y nota de la reseña (`eda.ipynb`, con borradores en `Python/eda_atraso.ipynb` y `Python/eda_espera.ipynb`). Integración de los tres análisis en `eda_olist.ipynb`. Traducción a Python del análisis de órdenes (`Proyecto_Angel.ipynb`). |
-| Juan Manuel Sóstenes Sánchez | Precio, flete, concentración de vendedores y ticket por estado (`Proyecto_JM.ipynb`). |
-| Angel Noriega Cabrera | Órdenes, tiempos de entrega, conciliación de pagos, categorías, regiones y distancia (`Proyecto_Final_Olist_FINAL.Rmd`). |
-| Eduardo Sánchez Benítez | Lectura de la estructura de clientes, geolocalización, productos y vendedores (`Proyecto_Eduardo.ipynb`). |
+| Juan Alberto Jaimes Romero | Pregunta de entregas tardías y nota de la reseña (`eda.ipynb`, con borradores en `Python/eda_atraso.ipynb` y `Python/eda_espera.ipynb`). Integración de los tres análisis en `eda_olist.ipynb`. Traducción a Python del análisis de órdenes (`edas_preliminares/Proyecto_Angel.ipynb`). |
+| Juan Manuel Sóstenes Sánchez | Precio, flete, concentración de vendedores y ticket por estado (`edas_preliminares/Proyecto_JM.ipynb`). |
+| Angel Noriega Cabrera | Órdenes, tiempos de entrega, conciliación de pagos, categorías, regiones y distancia (`edas_preliminares/Proyecto_Final_Olist_FINAL.Rmd`). |
+| Eduardo Sánchez Benítez | Lectura de la estructura de clientes, geolocalización, productos y vendedores (`edas_preliminares/Proyecto_Eduardo.ipynb`). |
 | Laura Berenice Badillo Santos | Integrante del equipo, registrada en los cuadernos. Su aporte concreto se anota en esta fila. |

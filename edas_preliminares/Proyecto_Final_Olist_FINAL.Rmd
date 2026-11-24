@@ -34,19 +34,77 @@ library(ggplot2)
 
 
 ```{r carga_bases_datos}
-# Importación de las bases de datos del proyecto.
-# Ajustar estas rutas si los archivos se encuentran en otra ubicación.
-Customers <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_customers_dataset.csv")
-Items <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_order_items_dataset.csv")
-Payments <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_order_payments_dataset.csv")
-Reviesw <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_order_reviews_dataset.csv")
-Orders <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_orders_dataset.csv")
-Products <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_products_dataset.csv")
-Seller <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_sellers_dataset.csv")
-Catalogo_categorias_nombres_ingles <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/product_category_name_translation.csv")
-Geolocalizacion  <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_geolocation_dataset.csv")
+# El Rmd está en edas_preliminares/. Busca los CSV en OLIST_DATA_DIR,
+# en ~/projects/work-at-olist-data/datasets y, subiendo desde esta carpeta
+# o desde la raíz del repositorio, en work-at-olist-data/datasets.
+localizar_datos <- function(requeridos) {
+  candidatos <- character()
+  definida <- Sys.getenv("OLIST_DATA_DIR", unset = "")
+  if (nzchar(definida)) candidatos <- c(candidatos, path.expand(definida))
+  candidatos <- c(candidatos, path.expand("~/projects/work-at-olist-data/datasets"))
 
+  semillas <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
+  anidada <- file.path(semillas, "edas_preliminares")
+  if (dir.exists(anidada)) {
+    semillas <- c(semillas, normalizePath(anidada, winslash = "/"))
+  }
 
+  for (semilla in semillas) {
+    base <- semilla
+    repeat {
+      candidatos <- c(
+        candidatos,
+        file.path(base, "work-at-olist-data", "datasets"),
+        file.path(base, "datasets"),
+        file.path(dirname(base), "work-at-olist-data", "datasets")
+      )
+      padre <- dirname(base)
+      if (identical(padre, base)) break
+      base <- padre
+    }
+  }
+
+  for (ruta in unique(candidatos)) {
+    if (dir.exists(ruta) && all(file.exists(file.path(ruta, requeridos)))) {
+      return(normalizePath(ruta, winslash = "/", mustWork = TRUE))
+    }
+  }
+  stop(paste(
+    "No encontré los CSV de Olist. Define OLIST_DATA_DIR o clona",
+    "https://github.com/olist/work-at-olist-data junto al proyecto."
+  ))
+}
+
+requeridos <- c(
+  "olist_customers_dataset.csv",
+  "olist_order_items_dataset.csv",
+  "olist_order_payments_dataset.csv",
+  "olist_order_reviews_dataset.csv",
+  "olist_orders_dataset.csv",
+  "olist_products_dataset.csv",
+  "olist_sellers_dataset.csv",
+  "product_category_name_translation.csv",
+  "olist_geolocation_dataset.csv"
+)
+data_dir <- localizar_datos(requeridos)
+if (basename(normalizePath(getwd(), winslash = "/")) == "edas_preliminares") {
+  salidas <- "SALIDAS"
+} else if (dir.exists("edas_preliminares")) {
+  salidas <- file.path("edas_preliminares", "SALIDAS")
+} else {
+  salidas <- "SALIDAS"
+}
+dir.create(salidas, recursive = TRUE, showWarnings = FALSE)
+
+Customers <- read_csv(file.path(data_dir, "olist_customers_dataset.csv"))
+Items <- read_csv(file.path(data_dir, "olist_order_items_dataset.csv"))
+Payments <- read_csv(file.path(data_dir, "olist_order_payments_dataset.csv"))
+Reviesw <- read_csv(file.path(data_dir, "olist_order_reviews_dataset.csv"))
+Orders <- read_csv(file.path(data_dir, "olist_orders_dataset.csv"))
+Products <- read_csv(file.path(data_dir, "olist_products_dataset.csv"))
+Seller <- read_csv(file.path(data_dir, "olist_sellers_dataset.csv"))
+Catalogo_categorias_nombres_ingles <- read_csv(file.path(data_dir, "product_category_name_translation.csv"))
+Geolocalizacion <- read_csv(file.path(data_dir, "olist_geolocation_dataset.csv"))
 ```
 
 ### 1.3 Funciones auxiliares
@@ -329,7 +387,7 @@ Serie_tiempo_entrega =  Ordenes_entregadas %>%
 # Exportación de la serie temporal a un archivo de texto.
 # Este archivo se utiliza posteriormente como fuente de datos para generar
 # las gráficas en R sobre la evolución de los tiempos de entrega.
-fwrite(Serie_tiempo_entrega , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Serie_promedios.txt")
+fwrite(Serie_tiempo_entrega , file = file.path(salidas, "Serie_promedios.txt"))
 
 
 ```
@@ -363,7 +421,7 @@ Comparacion_pago_realizado_costo_de_la_orden =  Pago_realizado_por_orden %>%
 # Exportación de la comparación por orden.
 # El archivo de texto se utiliza posteriormente como fuente de datos
 # para generar las gráficas en R sobre pagos, costos y sus diferencias.
-fwrite(Comparacion_pago_realizado_costo_de_la_orden , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Serie_pago_realizado_costo.txt")
+fwrite(Comparacion_pago_realizado_costo_de_la_orden , file = file.path(salidas, "Serie_pago_realizado_costo.txt"))
 
 
 ```
@@ -383,7 +441,7 @@ Degloce_tipo_de_pago_plazos =  Payments %>%
 # Exportación del detalle de pagos y plazos.
 # Este archivo de texto se utiliza posteriormente como fuente de datos
 # para generar las gráficas en R sobre los medios y plazos de pago.
-fwrite(Degloce_tipo_de_pago_plazos , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Serie_pago_realizado_costo_desgloce_tipo_de_pago.txt")
+fwrite(Degloce_tipo_de_pago_plazos , file = file.path(salidas, "Serie_pago_realizado_costo_desgloce_tipo_de_pago.txt"))
 
 ```
 
@@ -554,7 +612,7 @@ Ordenes_con_productos_y_info_cliente = Ordenes_con_productos_y_info_cliente %>%
 # El archivo de texto se utiliza posteriormente como fuente de datos
 # para generar las gráficas en R relacionadas con la distribución regional
 # y el análisis de las características de los productos y las órdenes.
-fwrite(Ordenes_con_productos_y_info_cliente , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Ordenes_con_productos_y_info_cliente.txt")
+fwrite(Ordenes_con_productos_y_info_cliente , file = file.path(salidas, "Ordenes_con_productos_y_info_cliente.txt"))
 
 
 # Relación entre el peso promedio del producto y el costo de transporte.
