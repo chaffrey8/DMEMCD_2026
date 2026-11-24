@@ -16,9 +16,17 @@ La libreta que responde las tres es [`eda_olist.ipynb`](eda_olist.ipynb). Conser
 
 ## Presentación
 
-La presentación que acompaña el proyecto y el video está en Google Slides, con el título EDA_Olist, es de acceso público:
+La presentación que acompaña el proyecto está en Google Slides, con el título EDA_Olist, es de acceso público:
 
 [https://docs.google.com/presentation/d/1UxybSwQy7YEI3Vzmf5iDbYUsCKR0ml4pCiwF-HewQkw/edit?usp=sharing](https://docs.google.com/presentation/d/1UxybSwQy7YEI3Vzmf5iDbYUsCKR0ml4pCiwF-HewQkw/edit?usp=sharing)
+
+## Video de exposición
+
+La exposición del entregable está en YouTube:
+
+[![Video de exposición](https://img.youtube.com/vi/prjN5amGeVI/hqdefault.jpg)](https://www.youtube.com/watch?v=prjN5amGeVI)
+
+[https://www.youtube.com/watch?v=prjN5amGeVI](https://www.youtube.com/watch?v=prjN5amGeVI)
 
 ## Integrantes
 
