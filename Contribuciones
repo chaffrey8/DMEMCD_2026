@@ -1,0 +1,17 @@
+## Registro de contribuciones del equipo
+El proyecto fue desarrollado de manera colaborativa por todo el equipo mediante reuniones de trabajo, revisión conjunta de información y construcción compartida del análisis.
+Definición del tema y selección de datos
+Durante una primera reunión de trabajo, todas las integrantes participaron en la discusión de posibles fuentes de información para el proyecto. Como parte de esta exploración, se revisaron diferentes fuentes de datos abiertos relacionadas con el sector asegurador para evaluar alternativas de análisis.
+Posteriormente, identificamos especialmente relevantes las bases de datos 33, 34 y 35 de Responsabilidad Civil publicadas por la Comisión Nacional de Seguros y Fianzas (CNSF), las cuales fueron revisadas de manera individual por todas las integrantes para proponer posibles enfoques de investigación.
+Formulación de la propuesta
+A partir de la revisión de las bases, se discutieron distintas ideas de análisis y se construyó de manera conjunta la propuesta final del proyecto. La definición de la pregunta de investigación, los objetivos y el enfoque general del análisis fueron resultado de la discusión y retroalimentación del equipo.
+Desarrollo técnico
+La construcción inicial del notebook incluyó la comprensión de los datos, el planteamiento metodológico, la identificación de la unidad de análisis y la integración de las bases de datos para generar la tabla consolidada utilizada durante el proyecto.
+Posteriormente, todas las integrantes participaron en el desarrollo del análisis, aportando código, revisiones, sugerencias metodológicas, visualizaciones, indicadores descriptivos e interpretación de resultados.
+Revisión y validación
+Las decisiones relacionadas con limpieza de datos, homologación de categorías, agregación de información, integración mediante operaciones de merge, estadística descriptiva y visualizaciones fueron revisadas y discutidas conjuntamente por el equipo antes de incorporarse a la versión final.
+Video de presentación
+La presentación final fue dividida en secciones para garantizar la participación de todas las integrantes. Cada integrante preparó y expuso una parte específica del proyecto, mientras que el contenido completo fue revisado de manera conjunta para asegurar consistencia entre las distintas secciones.
+Conclusión
+El trabajo se desarrolló de forma colaborativa. Todas las integrantes participaron en la selección del tema, el desarrollo del análisis, la revisión de resultados y la elaboración de la presentación final.
+
