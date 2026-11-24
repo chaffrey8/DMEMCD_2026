@@ -83,7 +83,8 @@ De las siete tablas de la base original se usaron cinco:
 1.1 Entrar a la rama del equipo:
    ```bash
 git fetch origin
-git checkout -b proyecto/Equipo_Tortugas_electricas
+git checkout proyecto/Equipo_Tortugas_electricas
+git pull origin proyecto/Equipo_Tortugas_electricas
    ```   
 2. Crea y activa un entorno virtual:
    ```bash
