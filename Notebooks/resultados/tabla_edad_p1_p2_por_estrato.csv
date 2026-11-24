@@ -1,0 +1,7 @@
+Estrato,Pregunta,Siniestros (n),Mujer (n),Mujer (%),IC95 inf (%),IC95 sup (%)
+Mujer más de 10 años mayor,Primera,1226,951,77.57,75.15,79.82
+Mujer más de 10 años mayor,Segunda,231,156,67.53,61.25,73.24
+Edades similares (|Δ| ≤ 10),Primera,1148,835,72.74,70.09,75.23
+Edades similares (|Δ| ≤ 10),Segunda,216,135,62.5,55.88,68.68
+Hombre más de 10 años mayor,Primera,1081,724,66.98,64.12,69.71
+Hombre más de 10 años mayor,Segunda,202,96,47.52,40.75,54.39

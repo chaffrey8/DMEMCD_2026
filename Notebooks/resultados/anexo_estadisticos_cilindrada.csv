@@ -1,0 +1,7 @@
+Grupo / Variable,Pares (n),Media (cc),Desv. Estándar (cc),Mediana (cc),Q1 (cc),Q3 (cc),IQR (cc)
+Cilindrada auto del hombre (global),5187,1692.01,540.39,1597.0,1360.0,1984.0,624.0
+Cilindrada auto de la mujer (global),5187,1507.46,430.34,1461.0,1200.0,1600.0,400.0
+Diferencia Δcc = hombre − mujer (global),5187,184.54,686.79,165.0,-201.5,571.0,772.5
+Δcc | Solo hombre lesionado,791,1.79,702.02,0.0,-396.0,444.0,840.0
+Δcc | Solo mujer lesionada,2115,292.55,676.02,236.0,-99.0,609.0,708.0
+Δcc | Ambos lesionados,1803,146.64,672.7,100.0,-243.0,508.0,751.0
