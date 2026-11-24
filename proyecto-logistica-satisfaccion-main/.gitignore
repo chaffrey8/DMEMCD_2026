@@ -1,0 +1,11 @@
+# Archivos temporales de Python y Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Entorno local
+.venv/
+
+# Datos de Olist: se obtienen clonando su repositorio (ver README)
+work-at-olist-data/
+data/raw/
