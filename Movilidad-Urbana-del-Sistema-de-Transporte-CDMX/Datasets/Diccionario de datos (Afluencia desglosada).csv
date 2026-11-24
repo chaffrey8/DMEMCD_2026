@@ -1,0 +1,19 @@
+No. ,"Nombre de la base y/o conjunto de datos
+
+(Repetir el nombre en todas las filas)",Nombre de la columna,Etiqueta,Descripción,"Tipo de dato
+
+(Seleccione de acuerdo a las opciones)","Formato 
+
+(Para columnas de fecha u hora)","Rango o valores que permite el campo
+
+","Registro de campos vacÃ­os 
+
+(Si este campo no tiene campos vacÃ­os anotar ""SIN DATOS VACÃOS"")"
+1,Afluencia diaria de STC Metro CDMX,fecha,fecha,Fecha de la medición de afuencia,Fecha,AAAA-MM-DD,fechas,SIN DATOS VACIOS
+2,Afluencia diaria de STC Metro CDMX,ano,año,Año de la medición de afluencia,Número entero,,Año,SIN DATOS VACIOS
+3,Afluencia diaria de STC Metro CDMX,mes,fecha,Mes de la medición de afluencia,Alfanumérico,,"Mes en texto, i.e. ""Enero""",SIN DATOS VACIOS
+4,Afluencia diaria de STC Metro CDMX,linea,línea,Línea del STC - Metro de la mediciónn de afluencia,Alfanumérico,,"""Línea X""",SIN DATOS VACIOS
+5,Afluencia diaria de STC Metro CDMX,afluencia_boleto,entradas al metro por boleto,Total de personas que han ingresado bajo el esquema de pago con boleto,Número entero,,Número entero,SIN DATOS VACIOS
+6,Afluencia diaria de STC Metro CDMX,afluencia_prepago,entradas al metro por prepago,Total de personas que han ingresado bajo el esquema de prepago,Número entero,,Número entero,SIN DATOS VACIOS
+7,Afluencia diaria de STC Metro CDMX,afluencia_gratuidad,entradas al metro por gratuidad,Total de personas que han ingresado bajo el esquema de gratuidad,Número entero,,Número entero,SIN DATOS VACIOS
+8,Afluencia diaria de STC Metro CDMX,afluencia_total,entradas totales al metro,Total de personas que a la fecha han ingresado a la red del Sistema de Transporte Colectivo Metro,Número entero,,Número entero,SIN DATOS VACIOS
