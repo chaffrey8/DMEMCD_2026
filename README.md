@@ -1,6 +1,6 @@
 &nbsp;
 
-# Precios de Airbnb y ubicación en la Ciudad de México
+# Precios de Airbnb y ubicación en la Ciudad de México - Estatus del Proyecto (TERMINADO)
 
 **Análisis exploratorio reproducible de 27,820 alojamientos anunciados en Airbnb**
 
