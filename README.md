@@ -8,8 +8,9 @@ Proyecto Integrador del Módulo I · *Preprocesamiento y técnicas básicas de v
 
 |  |  |
 | :---- | :---- |
-| **Equipo** | \[Gentrificadores\] |
-| **Video de exposición** | \[enlace al video\] |
+| **Equipo** | Gentrificadores |
+| **Video de exposición** | https://drive.google.com/file/d/1z6ks1jpa9J0ymz2kbfBM0VuqEMQFe-PT/view |
+| **Visualizador del Proyecto** | https://eulisseymontes-rqm.github.io/airbnb-cdmx-visualizador/ |
 
 ---
 
@@ -21,11 +22,8 @@ Proyecto Integrador del Módulo I · *Preprocesamiento y técnicas básicas de v
 4. [Contenido del notebook](#4-contenido-del-notebook)  
 5. [Calidad, limpieza y transformación](#5-calidad-limpieza-y-transformación)  
 6. [Principales hallazgos](#6-principales-hallazgos)  
-7. [Cómo reproducir el análisis](#7-cómo-reproducir-el-análisis)  
-8. [Dependencias](#8-dependencias)  
-9. [Resultados y visualizaciones](#9-resultados-y-visualizaciones)  
-10. [Registro de contribuciones](#10-registro-de-contribuciones)  
-11. [Referencias y créditos](#11-referencias-y-créditos)
+7. [Cómo reproducir el análisis](#7-cómo-reproducir-el-análisis)   
+8. [Referencias y créditos](#11-referencias-y-créditos)
 
 ---
 
@@ -77,12 +75,14 @@ Después de la limpieza, la base de análisis tiene **27,820 anuncios**, el 91.3
 
 ```
 .
+├── .gitignore
+├── requirements.txt
+├── Proyecto_Modulo1_DMEMCD.ipynb   
 ├── README.md
-├── Proyecto_Modulo1_DMEMCD.ipynb   # Análisis completo, con explicaciones, código y resultados
-└── datos/                          # Se crea al ejecutar el notebook (no se versiona)
-             
+├── CONTRIBUTIONS.md
+└── datos/                          
 ```
-
+Los datos **no se incluyen** en el repositorio por su tamaño y para respetar las condiciones de acceso de Inside Airbnb.
 
 ## 4\. Contenido del notebook
 
@@ -117,7 +117,7 @@ Un valor atípico no siempre es un error y no todo faltante debe imputarse: por 
 
 Trabajamos con 27,820 anuncios activos de la captura del 23 de septiembre de 2026\.
 
-1. **Distribución y tipo de alojamiento (4.1).** El precio típico es de \$1,500 por noche, con una media de \$2,103 que la cola de anuncios caros jala hacia arriba. Un alojamiento completo tiene una mediana de \$1,829 y una habitación privada, de \$849. En todas las alcaldías el alojamiento completo es más caro (entre 1.3 y 2.3 veces), y Miguel Hidalgo, Cuajimalpa de Morelos y Cuauhtémoc son las más caras en ambos tipos.  
+1. **Distribución y tipo de alojamiento (4.1).** El precio se concentra en valores bajos con una cola de anuncios muy caros, y el tipo de alojamiento es la diferencia más clara. Por alcaldía, en las 16 el alojamiento completo es más caro que la habitación privada. Las alcaldías del centro y poniente son las más caras, y también las que concentran la oferta. Las de la periferia son más baratas y con menos anuncios. Ademas, la ubicación pesa más en los alojamientos completos que en las habitaciones.
 2. **Distancia al centro (4.2).** La distancia al Zócalo casi no se relaciona con el precio (ρ \= −0.08). El precio sube del primer cuadro hasta un máximo entre 3 y 7 km y luego baja. Lo que sí marca diferencia es la dirección: el poniente tiene una mediana 53.7 % mayor que el oriente.  
 3. **Características del alojamiento (4.3).** El precio total crece con la capacidad (de \$1,500 para dos huéspedes a \$3,408 para ocho), pero el precio por huésped baja de \$750 a alrededor de \$400. Recámaras (0.46) y capacidad (0.43) tienen una correlación moderada con el precio.  
 4. **Calificación (4.4).** La asociación entre precio y calificación es positiva pero débil (Spearman de 0.15) y crece con más reseñas (0.25 con 92 reseñas o más). No se repite en todas las alcaldías: en Álvaro Obregón no hay asociación.  
@@ -145,15 +145,15 @@ Trabajamos con 27,820 anuncios activos de la captura del 23 de septiembre de 202
 ### Requisitos
 
 - Python 3.10 o superior  
-- Conexión a internet (solo la primera vez, para descargar los datos)  
+- Conexión a internet  
 - Espacio en disco y memoria suficientes.
 
 ### Pasos
 
 ```sh
 # 1. Clonar el repositorio
-git clone [URL del repositorio]
-cd [nombre-del-repositorio]
+git clone https://github.com/chaffrey8/DMEMCD_2026/tree/proyecto/gentrificadores
+cd proyecto/gentrificadores
 
 # 2. (Opcional) Crear un entorno virtual
 
@@ -164,7 +164,7 @@ pip install -r requirements.txt
 jupyter notebook Proyecto_Modulo1_DMEMCD.ipynb
 ```
 
-Ejecuten el notebook **de arriba hacia abajo y desde la raíz del repositorio**. Al correr la sección *0.3. Carga de los datos*, los archivos de la captura `2026-09-23` se descargan automáticamente en `datos/` (solo si todavía no existen) y las figuras se guardan en `resultados/`.
+Ejecutar el notebook desde la raíz del repositorio. Al correr la sección *0.3. Carga de los datos*, los archivos de la captura `2026-09-23` se descargan automáticamente en `datos/` (solo si todavía no existen).
 
 También puede ejecutarse en **Google Colab**: basta con subir el notebook; la descarga de datos funciona igual.
 
