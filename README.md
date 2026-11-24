@@ -38,14 +38,13 @@ Analizar si el incumplimiento de la fecha estimada de entrega en los pedidos de 
 
 Se necesita Python 3.12, Git y VS Code con las extensiones **Python** y **Jupyter**.
 
-0. Obtener el proyecto, clonándolo o descomprimiendo el zip:
+0. Obtener el proyecto clonándolo:
 
    ```bash
-   git clone https://github.com/emilicorojas/proyecto-logistica-satisfaccion.git
+   git clone https://github.com/chaffrey8/DMEMCD_2026/tree/Proyecto/Equipo1_LaGranjaNoVIP
    ```
 
-1. Abrir la carpeta `proyecto-logistica-satisfaccion` en VS Code (*File → Open Folder*).
-2. Abrir una terminal en VS Code (*Terminal → New Terminal*) y descargar los datos de Olist dentro de esta carpeta:
+1. Abrir una terminal en VS Code (*Terminal → New Terminal*) y descargar los datos de Olist dentro de esta carpeta:
 
    ```bash
    git clone https://github.com/olist/work-at-olist-data.git
@@ -54,7 +53,7 @@ Se necesita Python 3.12, Git y VS Code con las extensiones **Python** y **Jupyte
    Para usar exactamente la versión del análisis (opcional): `git -C work-at-olist-data checkout d9e4980`.
    Sin Git, se puede descargar el ZIP desde la página del repositorio (*Code → Download ZIP*) y descomprimirlo aquí con el nombre `work-at-olist-data`.
 
-3. Crear el entorno e instalar las dependencias:
+2. Crear el entorno e instalar las dependencias:
 
    ```bash
    python -m venv .venv
@@ -66,7 +65,7 @@ Se necesita Python 3.12, Git y VS Code con las extensiones **Python** y **Jupyte
 
    En macOS o Linux, el segundo comando es `.venv/bin/python -m pip install -r requirements.txt`.
 
-4. Abrir `analisis_logistica_satisfaccion.ipynb`, elegir el kernel `.venv` (arriba a la derecha) y ejecutar *Restart* y luego *Run All*.
+5. Abrir `analisis_logistica_satisfaccion.ipynb`, elegir el kernel `.venv` (arriba a la derecha) y ejecutar *Restart* y luego *Run All*.
 
 El notebook encuentra los datos solo: busca `work-at-olist-data/datasets` o `data/raw` (con los dos CSV) en esta carpeta y en las superiores, o la ruta de la variable de entorno `OLIST_DATA_DIR`.
 
