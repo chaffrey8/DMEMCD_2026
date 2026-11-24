@@ -14,6 +14,12 @@ Tres preguntas, sobre la misma lectura de los CSV:
 
 La libreta que responde las tres es [`eda_olist.ipynb`](eda_olist.ipynb). Conserva una subsección de análisis por cada cuaderno de origen.
 
+## Presentación
+
+La presentación que acompaña el proyecto y el videoestá en Google Slides, con el título EDA_Olist, es de acceso público:
+
+[https://docs.google.com/presentation/d/1UxybSwQy7YEI3Vzmf5iDbYUsCKR0ml4pCiwF-HewQkw/edit?usp=sharing](https://docs.google.com/presentation/d/1UxybSwQy7YEI3Vzmf5iDbYUsCKR0ml4pCiwF-HewQkw/edit?usp=sharing)
+
 ## Integrantes
 
 - Laura Berenice Badillo Santos
@@ -36,7 +42,7 @@ Análisis del entregable, en la raíz:
 | [`Python/requirements.txt`](Python/requirements.txt) | Dependencias de Python. |
 | [`Python/olist_tools.py`](Python/olist_tools.py) | Lectura de tablas. La usan `Proyecto_JM.ipynb` y `Proyecto_Eduardo.ipynb`. `eda_olist.ipynb` lee los CSV con pandas. |
 
-`Python/eda.ipynb`, `Python/eda_atraso.ipynb` y `Python/eda_espera.ipynb` son borradores del análisis de entregas. El resto de `Python/` (sesiones, cirrosis, ejercicios) es material de clase del diplomado y no forma parte de este análisis.
+`Python/eda.ipynb`, `Python/eda_atraso.ipynb` y `Python/eda_espera.ipynb` son borradores del análisis de entregas. El resto de `Python/` (sesiones, ejercicios, ...) es material de clase del diplomado y no forma parte de este análisis.
 
 ## Cómo reproducir el análisis
 
