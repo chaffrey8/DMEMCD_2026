@@ -1,0 +1,607 @@
+---
+title: "Proyecto Final"
+author: "Equipo 15"
+date: "2026-11-21"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+# Configuración general: mostrar el código R en el documento final.
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Proyecto final: análisis de datos de Olist
+
+## 1. Preparación del entorno
+
+En esta sección se cargan los paquetes que se utilizarán durante el análisis y las bases de datos del proyecto.
+
+```{r librerias}
+# Paquetes para importar datos, transformar tablas, generar gráficas
+# y exportar resultados a archivos.
+library(readr)
+library(tidyverse)
+library(openxlsx)
+library(data.table)
+library(ggplot2)
+
+
+```
+
+
+```{r carga_bases_datos}
+# Importación de las bases de datos del proyecto.
+# Ajustar estas rutas si los archivos se encuentran en otra ubicación.
+Customers <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_customers_dataset.csv")
+Items <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_order_items_dataset.csv")
+Payments <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_order_payments_dataset.csv")
+Reviesw <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_order_reviews_dataset.csv")
+Orders <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_orders_dataset.csv")
+Products <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_products_dataset.csv")
+Seller <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_sellers_dataset.csv")
+Catalogo_categorias_nombres_ingles <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/product_category_name_translation.csv")
+Geolocalizacion  <- read_csv("C:/Users/F20891/Documents/Diplomado/Titulación/olist_geolocation_dataset.csv")
+
+
+```
+
+### 1.3 Funciones auxiliares
+
+Se define una función para exportar un objeto de R a un libro de Excel y abrirlo desde RStudio.
+
+```{r funciones_auxiliares}
+# Recibe un data frame, crea un libro de Excel, escribe la tabla
+# en una hoja llamada 'Tabla' y abre el archivo en Excel.
+Crea_excel = function(x){ 
+  
+  wb = createWorkbook()
+  
+  addWorksheet(wb , sheetName = "Tabla" )
+  
+  writeData(wb , sheet = "Tabla" , x   )
+  
+  openXL(wb)
+}
+```
+
+
+## 2. Contexto de los datos
+
+El conjunto de datos fue proporcionado por Olist, una plataforma brasileña que conecta pequeños comercios con canales de venta en línea. Los vendedores ofrecen sus productos a través de Olist Store y realizan los envíos mediante socios logísticos.
+
+Después de la compra, el vendedor recibe una notificación para preparar el pedido. Una vez que el cliente recibe el producto —o cuando llega la fecha estimada de entrega—, se le envía una encuesta de satisfacción en la que puede calificar su experiencia y escribir comentarios.
+
+**Nota sobre la anonimización:** los datos corresponden a operaciones reales, pero fueron anonimizados. Los nombres de las compañías y de los participantes en las reseñas fueron sustituidos por nombres ficticios inspirados en los grandes ducados de *Game of Thrones*.
+
+
+## 3. Preguntas guía abordadas en el análisis
+
+En esta versión se conservan únicamente las preguntas que cuentan con un procedimiento de análisis en el código. Algunas se responden de manera directa y otras se exploran parcialmente; en esos casos se indica el alcance para evitar presentar como concluido un análisis que todavía requiere desarrollo.
+
+### 3.1 Calidad y estatus de las órdenes de compra
+
+- ¿Qué tan completa es la información de la base de órdenes y existen registros duplicados en sus identificadores?
+- ¿Cuál es la distribución porcentual de las órdenes según su estatus?
+
+### 3.2 Tiempos de entrega
+
+- ¿Cuál es el tiempo estimado de entrega de las órdenes?
+- ¿Cuál es el tiempo real de entrega?
+- ¿Cuántos días de retraso presentan, en promedio, las órdenes entregadas?
+- ¿Cómo evolucionan estos tiempos según la fecha de compra y qué diferencias se observan entre los promedios simples y los ponderados por el importe de la orden?
+
+### 3.3 Conciliación entre pagos y costo de las órdenes
+
+- ¿En qué medida coincide el importe pagado con el costo de los artículos más el costo de envío?
+- ¿Cuántas órdenes presentan información faltante en la tabla de pagos o en la tabla de artículos?
+- ¿Qué órdenes presentan diferencias entre el importe pagado y el costo calculado a partir de sus artículos y envío?
+
+### 3.4 Productos y categorías
+
+- ¿Qué tan completa es la información de productos asociada a los artículos de las órdenes?
+- ¿Cómo pueden agruparse las categorías originales en categorías generales para facilitar su análisis?
+
+### 3.5 Distribución geográfica y transporte
+
+- ¿Cómo se distribuyen los registros de productos y órdenes entre las regiones de Brasil?
+- ¿Existe una relación entre el peso del producto y el costo promedio de transporte?
+- ¿Qué distancia lineal aproximada existe entre la ubicación del vendedor y la del cliente, de acuerdo con sus coordenadas geográficas?
+
+**Alcance del análisis:** el código disponible no desarrolla todavía el análisis de tendencias de ventas, comparaciones de desempeño entre ciclos o regiones, distribución de precios, costos promedio por categoría, métodos y plazos de pago, dimensiones y volumen de los productos, análisis de reseñas ni una evaluación integral del desempeño logístico. Por ello, esas preguntas se retiraron de esta sección y no se presentan como resultados del proyecto.
+
+## 4. Desarrollo del proyecto
+
+## 4.1 Análisis de la base de órdenes (`Orders`)
+
+### Distribución de las órdenes por estatus
+
+**Preguntas que se abordan:** ¿Qué tan completa es la información de la base de órdenes y existen registros duplicados en sus identificadores? ¿Cuál es la distribución porcentual de las órdenes según su estatus?
+
+Se revisan las estadísticas descriptivas, los valores faltantes y los posibles registros duplicados. Posteriormente, se calcula la participación porcentual de cada estatus y se representa mediante una gráfica de barras.
+```{r distribucion_estatus_ordenes}
+# Estadísticas descriptivas de la base de órdenes.
+Orders %>% summary()
+
+(colSums(is.na.data.frame( Orders)) / nrow( Orders))*100
+
+# Conteo de identificadores duplicados.
+sum(duplicated(Orders$order_id))
+sum(duplicated(Orders$customer_id))
+
+# Porcentaje de órdenes correspondiente a cada estatus.
+Proporcion_del_total_por_estatus_de_la_orden = Orders %>%
+  group_by(order_status) %>%
+  summarise(frecuencia_del_estatus_de_la_orden = n()/nrow(Orders)*100)
+
+print(Proporcion_del_total_por_estatus_de_la_orden)
+
+# Gráfica de la distribución porcentual de los estatus.
+ggplot(Proporcion_del_total_por_estatus_de_la_orden, aes( x = order_status, y = frecuencia_del_estatus_de_la_orden )) +
+   geom_col(fill = "steelblue") +
+  labs(
+    title = "Proporción de órdenes por estatus",
+    x = "Estatus de la orden",
+    y = "Porcentaje del total (%)"
+  ) +
+  theme_minimal()
+
+
+```
+
+
+### Tiempos estimados y reales de entrega
+
+**Preguntas que se abordan:** ¿Cuál es el tiempo estimado de entrega? ¿Cuál es el tiempo real? ¿Cuántos días de retraso presentan las órdenes entregadas? ¿Cómo evolucionan estos tiempos según la fecha de compra?
+
+Se consideran únicamente las órdenes cuyo estatus es `delivered`. Las fechas se convierten al formato `Date` para calcular los tiempos transcurridos entre la compra, la entrega estimada y la entrega efectiva.
+```{r estadisticas_proceso_entrega}
+# Filtrado de órdenes entregadas y conversión de las columnas de fecha.
+Ordenes_entregadas = Orders %>%
+  filter(order_status == "delivered") %>%
+  mutate(order_purchase_timestamp = as.Date(order_purchase_timestamp), 
+         order_approved_at = as.Date(order_approved_at), 
+         order_delivered_carrier_date = as.Date(order_delivered_carrier_date), 
+         order_delivered_customer_date = as.Date(order_delivered_customer_date), 
+         order_estimated_delivery_date = as.Date(order_estimated_delivery_date))
+
+(colSums(is.na.data.frame(Ordenes_entregadas %>% select(order_purchase_timestamp, 
+                                                       order_delivered_carrier_date , 
+                                                       order_delivered_customer_date, 
+                                                       order_estimated_delivery_date))))
+
+(colSums(is.na.data.frame(Ordenes_entregadas %>% select(order_purchase_timestamp, 
+                                                       order_delivered_carrier_date , 
+                                                       order_delivered_customer_date, 
+                                                       order_estimated_delivery_date)))/nrow(Ordenes_entregadas) *100) 
+
+
+
+```
+
+**Tratamiento de valores faltantes.** Dado que las órdenes están marcadas como entregadas, la ausencia de una fecha efectiva de entrega se considera una posible inconsistencia. Para este análisis, se imputa con la fecha promedio observada entre las órdenes compradas en el mismo día. Se aplica el mismo criterio a la fecha de entrega al transportista. 
+
+```{r imputacion_fechas_entrega}
+
+Ordenes_entregadas =  Ordenes_entregadas %>%
+  group_by(order_purchase_timestamp) %>%
+  mutate(order_delivered_customer_date =  if_else( is.na(order_delivered_customer_date) , 
+                                                   mean(order_delivered_customer_date , na.rm= TRUE) ,
+                                                   order_delivered_customer_date),
+         order_delivered_carrier_date = if_else(is.na(order_delivered_carrier_date) , 
+                                                mean(order_delivered_carrier_date , na.rm = TRUE),
+                                                order_delivered_carrier_date))
+  
+
+
+(colSums(is.na.data.frame(Ordenes_entregadas %>% select(order_purchase_timestamp, 
+                                                       order_delivered_carrier_date , 
+                                                       order_delivered_customer_date, 
+                                                       order_estimated_delivery_date))))
+
+```
+
+
+A partir de las fechas disponibles se construyen tres variables: tiempo estimado de entrega, tiempo real de entrega y días de retraso. Cuando la entrega ocurre antes de la fecha estimada, los días de retraso se registran como cero.
+
+```{r calculo_tiempos_entrega}
+# Diferencia, en días, entre la compra y la fecha estimada o efectiva.
+# Los retrasos negativos se sustituyen por cero.
+Ordenes_entregadas = Ordenes_entregadas %>%
+  mutate(Tiempo_estimado_de_entrega_en_dias = order_estimated_delivery_date - order_purchase_timestamp, 
+         Tiempo_de_entrega_en_dias = order_delivered_customer_date - order_purchase_timestamp, 
+         Dias_de_retraso = if_else(order_delivered_customer_date - order_estimated_delivery_date >0 , 
+                                   order_delivered_customer_date - order_estimated_delivery_date , 
+                                   as.Date("2026-01-01") - as.Date("2026-01-01")))
+
+```
+
+
+### Comparación entre el importe pagado y el costo de los artículos y el envío
+
+**Preguntas que se abordan:** ¿En qué medida coincide el importe pagado con el costo de los artículos más el envío? ¿Qué órdenes presentan información faltante en alguna de las dos fuentes?
+
+Se comparan dos fuentes: `Payments`, que contiene los pagos registrados por orden, e `Items`, que permite calcular el costo total de los productos y el transporte. Primero se agregan ambas bases al nivel de `order_id`.
+```{r calculo_pago_y_costo_por_orden}
+
+colSums(is.na.data.frame(Payments)) 
+
+# Suma de todos los pagos registrados para cada orden.
+Pago_realizado_por_orden =  Payments %>%
+  group_by(order_id) %>%
+  summarise(Pago_realizado = sum(payment_value , na.rm = TRUE)) 
+
+hist(Pago_realizado_por_orden$Pago_realizado , breaks = 100)
+
+quantile(Pago_realizado_por_orden$Pago_realizado)
+
+
+colSums(is.na.data.frame(Items))
+
+# Costo por orden = suma del precio de los artículos y del transporte.
+Costo_por_orden = Items %>%
+  mutate(Costo_total = price + freight_value) %>%
+  group_by(order_id) %>%
+  summarise(Costo = sum(Costo_total, na.rm = TRUE))
+
+hist(Costo_por_orden$Costo, breaks = 100)
+
+
+quantile(Costo_por_orden$Costo) 
+
+```
+
+
+Se identifican las órdenes entregadas que no tienen un registro de pago. Para los casos sin importe registrado en `Payments`, se utiliza como referencia el costo calculado a partir de los artículos y el envío. Esta sustitución se realiza únicamente para construir una variable consolidada de importe; no modifica la base original de pagos.
+```{r ordenes_entregadas_sin_pago}
+# Identificadores de órdenes entregadas que no tienen un pago registrado.
+Ordenes_sin_registro_de_pago = Ordenes_entregadas %>%
+  left_join(Pago_realizado_por_orden, by = "order_id") %>%
+  filter(is.na(Pago_realizado)) %>% select(order_id) %>% pull()
+```
+
+
+El `full_join()` permite identificar órdenes que aparecen en una de las dos fuentes, pero no en la otra. Se cuentan por separado los registros sin pago y los registros sin información de artículos.
+
+```{r identificacion_faltantes_pago_items}
+# Unión completa para conservar los identificadores presentes en cualquiera
+# de las dos fuentes y detectar faltantes en cada una.
+Full_join_Pago_relizado_Costo_por_orden = Pago_realizado_por_orden %>%
+  full_join(Costo_por_orden, by = "order_id") 
+
+Faltantes_en_ambas_bases = Full_join_Pago_relizado_Costo_por_orden %>%
+  filter(is.na(Pago_realizado) | is.na(Costo))
+
+Faltantes_Pago_realizado = Faltantes_en_ambas_bases %>%
+  filter(is.na(Pago_realizado))
+
+Faltantes_Costo_realizado = Faltantes_en_ambas_bases %>%
+  filter(is.na(Costo))
+
+paste0("# Ordenes faltantes en la tabla pagos: " , nrow(Faltantes_Pago_realizado))
+paste0("# Ordenes faltantes en la tabla items: " , nrow(Faltantes_Costo_realizado))
+
+
+```
+
+Se construye `Pago_final`, que conserva el pago observado cuando existe y, en caso contrario, utiliza el costo calculado. Al final se verifica si alguna orden entregada continúa sin un importe consolidado.
+
+```{r construccion_pago_consolidado}
+# Se prioriza el importe efectivamente pagado; si no existe, se usa el costo.
+Pago_final =  Full_join_Pago_relizado_Costo_por_orden %>%
+  mutate(Pago_consolidado = if_else( !is.na(Pago_realizado) , Pago_realizado  , Costo ))
+
+Pago_final = Pago_final %>%
+  filter(!is.na(Pago_consolidado)) 
+
+
+Ordenes_entregadas %>%
+  left_join(Pago_final , by = "order_id") %>%
+  filter(is.na(Pago_consolidado))
+
+``` 
+
+
+### Evolución temporal de los tiempos de entrega
+
+**Pregunta que se aborda:** ¿Cómo evolucionan los tiempos estimados y reales de entrega según la fecha de compra, tanto en promedio simple como ponderado por el importe de la orden?
+
+Se incorpora el importe consolidado a la base de órdenes entregadas. Después, se calculan promedios diarios simples y promedios ponderados por el importe de la orden. La serie resultante se exporta en un archivo de texto (`Serie_promedios.txt`), que se utiliza posteriormente como fuente de datos para generar las gráficas en R.
+
+```{r serie_temporal_tiempos_entrega}
+# Incorporación del importe consolidado a las órdenes entregadas.
+Ordenes_entregadas =  Ordenes_entregadas%>%
+  left_join(Pago_final , by = "order_id") 
+
+# Agregación diaria de los tiempos de entrega y cálculo de promedios.
+Serie_tiempo_entrega =  Ordenes_entregadas %>%
+  group_by(order_purchase_timestamp) %>%
+  summarise(Promedio_ponderado_con_pago_tiempo_estimado_entrega = weighted.mean(Tiempo_estimado_de_entrega_en_dias , Pago_consolidado), 
+            Promedio_tiempo_estimado_entrega = mean(Tiempo_estimado_de_entrega_en_dias), 
+            Promedio_ponderado_con_pago_tiempo_entrega = weighted.mean(Tiempo_de_entrega_en_dias , Pago_consolidado), 
+            Promedio_tiempo_entrega = mean(Tiempo_de_entrega_en_dias), 
+            Promedio_dias_atraso = mean(Dias_de_retraso), 
+            Conteo = n())
+
+# Exportación de la serie temporal a un archivo de texto.
+# Este archivo se utiliza posteriormente como fuente de datos para generar
+# las gráficas en R sobre la evolución de los tiempos de entrega.
+fwrite(Serie_tiempo_entrega , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Serie_promedios.txt")
+
+
+```
+
+
+### Diferencias entre pagos y costos por orden
+
+**Pregunta que se aborda:** ¿Qué órdenes presentan diferencias entre el importe pagado y el costo calculado a partir de sus artículos y envío?
+
+Se calcula la diferencia entre el importe pagado y el costo de los artículos más el transporte. También se incorpora el estatus y la fecha de compra para facilitar el análisis de las discrepancias. La base consolidada se exporta a un archivo de texto (`Serie_pago_realizado_costo.txt`), utilizado posteriormente como fuente de datos para elaborar las gráficas en R.
+
+```{r comparacion_pago_costo}
+# Revisión inicial de órdenes sin diferencia calculable (por datos faltantes).
+Pago_realizado_por_orden %>%
+  full_join( Costo_por_orden , by = "order_id") %>%
+  mutate(Diferencia = Pago_realizado - Costo) %>%
+  filter(is.na(Diferencia)) %>%
+  left_join(Orders %>% select(order_id, order_status) , by = "order_id") %>%
+  filter(is.na(order_status))
+
+# La revisión permite contrastar la cobertura de las órdenes en las tablas de pagos, artículos y órdenes.
+
+
+# Base consolidada con pago, costo, diferencia, estatus y fecha de compra.
+Comparacion_pago_realizado_costo_de_la_orden =  Pago_realizado_por_orden %>%
+  full_join( Costo_por_orden , by = "order_id") %>%
+  mutate(Diferencia = round( Pago_realizado - Costo,0) ) %>%
+  left_join(Orders %>% select(order_id, order_status , order_purchase_timestamp) , by = "order_id") %>%
+  mutate(order_purchase_timestamp = as.Date(order_purchase_timestamp))
+
+# Exportación de la comparación por orden.
+# El archivo de texto se utiliza posteriormente como fuente de datos
+# para generar las gráficas en R sobre pagos, costos y sus diferencias.
+fwrite(Comparacion_pago_realizado_costo_de_la_orden , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Serie_pago_realizado_costo.txt")
+
+
+```
+
+
+
+### Desglose de los medios de pago
+
+Se integra la información de pagos con las diferencias calculadas por orden para examinar los métodos de pago y los pagos a plazos en los casos identificados. El resultado se exporta a un archivo de texto (`Serie_pago_realizado_costo_desgloce_tipo_de_pago.txt`), que se utiliza posteriormente como fuente de datos para generar las gráficas en R relacionadas con el desglose de los medios y plazos de pago.
+
+```{r desglose_medios_pago}
+# Integración del detalle de pagos con la comparación de importes por orden.
+Degloce_tipo_de_pago_plazos =  Payments %>%
+  full_join(Comparacion_pago_realizado_costo_de_la_orden , by = "order_id")
+
+
+# Exportación del detalle de pagos y plazos.
+# Este archivo de texto se utiliza posteriormente como fuente de datos
+# para generar las gráficas en R sobre los medios y plazos de pago.
+fwrite(Degloce_tipo_de_pago_plazos , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Serie_pago_realizado_costo_desgloce_tipo_de_pago.txt")
+
+```
+
+
+
+
+## 4.2 Análisis de productos y artículos
+
+**Preguntas que se abordan:** ¿Qué tan completa es la información de productos asociada a los artículos de las órdenes? ¿Cómo pueden agruparse las categorías originales en categorías generales?
+
+Se revisan las características generales de las tablas `Items`, `Products` y del catálogo de traducción de categorías. Después se integran para construir una base de artículos por orden.
+
+```{r productos_por_orden}
+# Resumen de las tablas de artículos, productos y traducción de categorías.
+
+print( summary(Items))
+print( summary(Products))
+print(summary(Catalogo_categorias_nombres_ingles))
+
+
+# Revisión de registros sin categoría o sin información de producto
+Items %>%
+  full_join(Products , by = "product_id") %>%
+filter(is.na(product_category_name)) %>% nrow() %>% print()
+# En la revisión original se identificaron 1,603 registros sin categoría de producto. 
+
+Items %>%
+  full_join(Products , by = "product_id") %>%
+filter(is.na(price)) %>% nrow() %>% print()
+
+# Se comprueba si existen productos sin información de precio en la unión de las tablas.
+
+
+# Integración de artículos, atributos de producto y traducción de categorías.
+Productos_por_orden =  Items %>%
+  left_join(Products , by = "product_id" ) %>%
+  left_join(Catalogo_categorias_nombres_ingles , by = "product_category_name")
+
+# Agrupación de las categorías originales en categorías generales.
+Productos_por_orden = Productos_por_orden %>%
+  mutate(
+    categoria_general = case_when(
+      product_category_name_english %in% c(
+        "audio", "computers", "computers_accessories",
+        "consoles_games", "electronics", "fixed_telephony",
+        "telephony", "tablets_printing_image",
+        "small_appliances", "small_appliances_home_oven_and_coffee",
+        "home_appliances", "home_appliances_2"
+      ) ~ "Tecnología y electrónica",
+      product_category_name_english %in% c(
+        "bed_bath_table", "furniture_bedroom",
+        "furniture_decor", "furniture_living_room",
+        "furniture_mattress_and_upholstery",
+        "home_comfort_2", "home_confort",
+        "housewares", "kitchen_dining_laundry_garden_furniture",
+        "la_cuisine", "office_furniture"
+      ) ~ "Hogar y mobiliario",
+      product_category_name_english %in% c(
+        "fashio_female_clothing", "fashion_bags_accessories",
+        "fashion_childrens_clothes", "fashion_male_clothing",
+        "fashion_shoes", "fashion_sport",
+        "fashion_underwear_beach", "watches_gifts",
+        "luggage_accessories"
+      ) ~ "Moda y accesorios",
+      product_category_name_english %in% c(
+        "health_beauty", "perfumery",
+        "diapers_and_hygiene"
+      ) ~ "Belleza y cuidado personal",
+      product_category_name_english %in% c(
+        "construction_tools_construction",
+        "construction_tools_lights",
+        "construction_tools_safety",
+        "costruction_tools_garden",
+        "costruction_tools_tools",
+        "garden_tools", "home_construction",
+        "air_conditioning"
+      ) ~ "Construcción y jardín",
+      product_category_name_english %in% c(
+        "sports_leisure", "toys", "cool_stuff",
+        "christmas_supplies", "party_supplies",
+        "art", "arts_and_craftmanship",
+        "cine_photo", "cds_dvds_musicals",
+        "dvds_blu_ray", "music", "musical_instruments"
+      ) ~ "Entretenimiento y recreación",
+      product_category_name_english %in% c(
+        "books_general_interest", "books_imported",
+        "books_technical", "stationery"
+      ) ~ "Libros y papelería",
+      product_category_name_english %in% c(
+        "agro_industry_and_commerce", "drinks",
+        "food", "food_drink"
+      ) ~ "Alimentos y bebidas",
+      product_category_name_english %in% c(
+        "auto", "industry_commerce_and_business",
+        "market_place", "signaling_and_security",
+        "security_and_services"
+      ) ~ "Automotriz e industria",
+      product_category_name_english %in% c(
+        "pet_shop", "flowers"
+      ) ~ "Mascotas y flores",
+      TRUE ~ "Otros"
+    )
+  )
+
+print(Productos_por_orden %>%
+        count(categoria_general))
+
+```
+
+
+## 4.3 Integración de órdenes, productos y clientes
+
+**Preguntas que se abordan:** ¿Cómo se distribuyen los registros entre las regiones de Brasil? ¿Existe una relación entre el peso del producto y el costo promedio de transporte? ¿Qué distancia lineal aproximada existe entre la ubicación del vendedor y la del cliente?
+
+Se incorporan los datos de las órdenes y de los clientes a la base de artículos. También se agrupan los estados de Brasil en regiones para facilitar el análisis espacial.
+
+```{r integracion_ordenes_productos_clientes}
+# Revisión descriptiva de la información de clientes.
+summary(Customers) %>% print()
+
+Productos_por_orden %>%
+  left_join(Orders, by = "order_id") %>%
+  left_join(Customers , by = "customer_id") %>%
+  filter(is.na(customer_state)) %>% nrow() %>%  print()
+
+# Verificación de la disponibilidad de información del cliente
+ 
+
+# Integración de la información de productos, órdenes y clientes.
+Ordenes_con_productos_y_info_cliente = Productos_por_orden %>%
+  left_join(Orders, by = "order_id") %>%
+  left_join(Customers , by = "customer_id")
+
+
+# Clasificación de los estados brasileños en cinco regiones.
+Ordenes_con_productos_y_info_cliente = Ordenes_con_productos_y_info_cliente %>%
+  mutate(
+    region = case_when(
+      customer_state %in% c(
+        "AC", "AP", "AM", "PA",
+        "RO", "RR", "TO"
+      ) ~ "Norte",
+      customer_state %in% c(
+        "AL", "BA", "CE", "MA", "PB",
+        "PE", "PI", "RN", "SE"
+      ) ~ "Nordeste",
+      customer_state %in% c(
+        "DF", "GO", "MT", "MS"
+      ) ~ "Centro-Oeste",
+      customer_state %in% c(
+        "ES", "MG", "RJ", "SP"
+      ) ~ "Sudeste",
+      customer_state %in% c(
+        "PR", "RS", "SC"
+      ) ~ "Sur",
+
+      TRUE ~ "Sin clasificación"
+    )
+  )
+
+
+Ordenes_con_productos_y_info_cliente %>%
+  count(region) %>% print()
+
+Ordenes_con_productos_y_info_cliente = Ordenes_con_productos_y_info_cliente %>%
+  mutate(order_purchase_timestamp = as.Date(order_purchase_timestamp))
+# Exportación de la base integrada de órdenes, productos y clientes.
+# El archivo de texto se utiliza posteriormente como fuente de datos
+# para generar las gráficas en R relacionadas con la distribución regional
+# y el análisis de las características de los productos y las órdenes.
+fwrite(Ordenes_con_productos_y_info_cliente , file = "C:/Users/F20891/Documents/Diplomado/Titulación/SALIDAS/Ordenes_con_productos_y_info_cliente.txt")
+
+
+# Relación entre el peso promedio del producto y el costo de transporte.
+Precio_transporte_y_peso_producto = Ordenes_con_productos_y_info_cliente %>%
+  group_by(product_id)%>%
+  summarise(Promedio_precio_transporte = mean(freight_value), 
+            Peso_del_producto = mean(product_weight_g))
+
+print( cor(Precio_transporte_y_peso_producto$Peso_del_producto , Precio_transporte_y_peso_producto$Promedio_precio_transporte , use = "complete.obs" ))
+
+
+# Estandarización de los códigos postales e integración de coordenadas
+# geográficas de clientes y vendedores.
+Productos_por_pedido_ubicacion_cliente_vendedor = Ordenes_con_productos_y_info_cliente %>%
+  mutate(customer_zip_code_prefix = str_pad(customer_zip_code_prefix, width = 5 , side = "left" , pad = "0" )) %>%
+  left_join(Geolocalizacion %>%
+   distinct(geolocation_zip_code_prefix  , .keep_all = TRUE) , by = c("customer_zip_code_prefix" = "geolocation_zip_code_prefix")) %>% 
+  left_join(Seller , by = "seller_id" , suffix = c("", "_seller")) %>% 
+  mutate(seller_zip_code_prefix = str_pad(seller_zip_code_prefix, width = 5 , side = "left" , pad = "0" )) %>%
+  left_join(Geolocalizacion %>%
+   distinct(geolocation_zip_code_prefix  , .keep_all = TRUE) , by = c("seller_zip_code_prefix" = "geolocation_zip_code_prefix"), suffix = c("_cliente", "_vendedor"))
+  
+
+# Cálculo de una distancia lineal aproximada entre las coordenadas
+# del cliente y del vendedor (no representa una distancia por carretera).
+Productos_por_pedido_ubicacion_cliente_vendedor = Productos_por_pedido_ubicacion_cliente_vendedor %>%
+  mutate(distancia_lineal_recorrida = sqrt( (geolocation_lat_cliente - geolocation_lat_vendedor)^2 + (geolocation_lng_cliente - geolocation_lng_vendedor)^2)) 
+
+# Resumen por orden de transporte, peso y distancia lineal promedio.
+Distanica_peso_por_producto = Productos_por_pedido_ubicacion_cliente_vendedor %>%
+  filter(!is.na(distancia_lineal_recorrida)) %>%
+  group_by(order_id) %>%
+  summarise(Promedio_precio_transporte = mean(freight_value, na.rm = TRUE), 
+            Peso_del_producto = mean(product_weight_g , na.rm = TRUE), 
+            Promedio_distancia_recorrida = mean(distancia_lineal_recorrida, na.rm = TRUE)) 
+Distanica_peso_por_producto %>% Crea_excel()
+
+
+
+```
+
+---
+
+## 5. Alcance de esta versión
+
+En esta versión se documentan los procesos implementados en el código: revisión de la calidad y los estatus de las órdenes, análisis de tiempos de entrega, conciliación de pagos y costos, revisión y clasificación de productos, distribución regional, relación exploratoria entre peso y costo de transporte, e integración de coordenadas para estimar una distancia lineal entre cliente y vendedor.
+
+Los resultados geográficos deben interpretarse con cautela: el conteo por región se realiza sobre los registros de artículos integrados, y la distancia calculada a partir de coordenadas es una diferencia lineal aproximada, no una distancia real de traslado ni una ruta logística.
+
+Los temas que no tienen un procedimiento implementado —como tendencias de ventas, precios por categoría, distribución de métodos de pago, reseñas y evaluación integral del transporte— se retiraron de las preguntas guía de esta versión.
