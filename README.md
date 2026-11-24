@@ -16,7 +16,7 @@ La libreta que responde las tres es [`eda_olist.ipynb`](eda_olist.ipynb). Conser
 
 ## Presentación
 
-La presentación que acompaña el proyecto y el videoestá en Google Slides, con el título EDA_Olist, es de acceso público:
+La presentación que acompaña el proyecto y el video está en Google Slides, con el título EDA_Olist, es de acceso público:
 
 [https://docs.google.com/presentation/d/1UxybSwQy7YEI3Vzmf5iDbYUsCKR0ml4pCiwF-HewQkw/edit?usp=sharing](https://docs.google.com/presentation/d/1UxybSwQy7YEI3Vzmf5iDbYUsCKR0ml4pCiwF-HewQkw/edit?usp=sharing)
 
@@ -90,6 +90,14 @@ ipykernel>=6
 ```
 
 `eda_olist.ipynb` usa pandas, NumPy, matplotlib e IPython. IPython llega con `notebook` e `ipykernel`. La libreta no instala paquetes al ejecutarse.
+
+## Herramientas
+
+- **Python, Jupyter, pandas, NumPy y matplotlib.**  
+- **RStudio.**   
+- **Power BI.**  
+- **Google Slides.**  
+- **Grok.**  
 
 ## Datos y licencia
 
