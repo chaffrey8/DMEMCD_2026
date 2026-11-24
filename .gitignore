@@ -3,6 +3,10 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# explanatory notebooks
+Python/eda_*
+
+
 # C extensions
 *.so
 
