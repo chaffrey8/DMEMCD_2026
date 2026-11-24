@@ -77,9 +77,14 @@ De las siete tablas de la base original se usaron cinco:
 
 1. Clona el repositorio:
    ```bash
-   git clone <URL-del-repositorio>
-   cd <nombre-del-repositorio>
+   git clone https://github.com/chaffrey8/DMEMCD_2026
+   cd DMEMCD_2026
    ```
+1.1 Entrar a la rama del equipo:
+   ```bash
+git fetch origin
+git checkout -b proyecto/Equipo_Tortugas_electricas
+   ```   
 2. Crea y activa un entorno virtual:
    ```bash
    python -m venv .venv
@@ -94,20 +99,15 @@ De las siete tablas de la base original se usaron cinco:
    ```
 4. Verifica que los cinco CSV estén en `data/raw/` (el notebook detecta la raíz del proyecto buscando esa carpeta y falla con un mensaje si falta algún archivo).
 5. Abre `notebooks/proyecto_integrador.ipynb` y ejecuta Run All.
-
-**Dependencias principales** (`requirements.txt`): `pandas`, `numpy`, `matplotlib`, `scipy`, `ipython`, `jupyter`.
-`[Pega aquí las versiones con las que corrió el equipo: pip freeze | grep -E "pandas|numpy|matplotlib|scipy"]`
-
 ---
 
 ## 5. Contenido del notebook
 
 1. Planteamiento del problema y comprensión de los datos.
-2. Carga de datos y auditoría de tipos (contrato de tipos esperados por tabla).
-3. Exploración y estadística descriptiva (tendencia central, dispersión, percentiles, asimetría, frecuencias, correlaciones de Pearson y Spearman).
-4. Calidad, limpieza y transformación.
-5. Visualización de los datos.
-6. Interpretación y conclusiones.
+2. Exploración y estadística descriptiva (tendencia central, dispersión, percentiles, asimetría, frecuencias, correlaciones de Pearson y Spearman).
+3. Calidad, limpieza y transformación.
+4. Visualización de los datos.
+5. Interpretación y conclusiones.
 
 ---
 
@@ -164,13 +164,12 @@ Margen calculado por orden sobre la venta neta (subtotal menos descuento), con c
 
 ### Eje 2 — Concentración de utilidad y devoluciones por producto
 
-- El 80 % de la utilidad bruta neta (80.03 %) se concentra en 384 de 1,385 SKUs activos (27.73 %).
-- 169 de esos 384 SKUs (44.0 %) tienen tasas de devolución superiores al promedio de su categoría.
-- Tents lidera el núcleo rentable (95 SKUs, 24.74 %, cerca de \$3.01M USD de utilidad), seguida de Navigation (62 SKUs, 16.15 %) y Sleeping Bags (61 SKUs, 15.89 %).
-- Backpacks concentra la mayor presión de devoluciones: 1,081 líneas devueltas y cerca de \$199.7k USD en reembolsos con solo 31 SKUs (8.07 % del núcleo). Le siguen Cooking (554 líneas, 16 SKUs) y Accessories (483 líneas, 12 SKUs).
-- Producto más crítico: OUT-00518 (Tundra Hydration Pack), con cerca de \$1.42M USD de utilidad y 493 líneas devueltas de 10,802 vendidas (4.56 %).
-- Un mayor volumen de devoluciones no siempre implica una tasa alta: OUT-00490 y OUT-00722 tienen muchas devoluciones pero tasas menores al promedio de su categoría. En cambio, OUT-00529 (5.06 %), OUT-00193 (4.74 %) y OUT-00694 (4.50 %) superan la media de su rubro.
-- Las tasas extremas en productos de baja rotación (por ejemplo 12.20 % en 41 líneas) requieren cautela por su muestra pequeña.
+- **La utilidad está altamente concentrada en una fracción del catálogo.** El 28.4 % del catálogo activo (394 SKUs) acumula el 80.0 % de la utilidad bruta neta, apoyándose en el `subtotal` con prorrateo de descuentos y reembolsos, y excluyendo impuestos y envíos para aislar el margen comercial del producto.
+- **Tents lidera la amplitud del núcleo rentable.** Dentro del umbral del 80 %, **Tents** es la categoría más repetida con **95 SKUs** (24.1 % del núcleo), seguida por **Navigation** (63 SKUs, 16.0 %) y **Sleeping Bags** (63 SKUs, 16.0 %), las cuales sostienen el grueso de la rentabilidad con una carga de devoluciones moderada frente a su tamaño.
+- **Backpacks concentra la mayor presión de devoluciones en el umbral.** Con **31 SKUs** (7.9 % del núcleo), **Backpacks** acumula **1,060 líneas devueltas**; junto con **Cooking** (549 líneas en 16 SKUs, 4.1 %) y **Accessories** (478 líneas en 12 SKUs, 3.0 %), evidencia una fricción postventa elevada en relación con su presencia en el Top 80 %.
+- **Tundra Hydration Pack (Moss) (OUT-00518) es el activo más crítico por escala e impacto financiero.** Lidera la utilidad bruta neta (~1.4M USD) y el conteo absoluto de devoluciones con **480 líneas devueltas** sobre 10,665 vendidas (~4.50 %), ubicándose por encima del promedio de su categoría (~4.3 %).
+- **Volumen de devoluciones no siempre equivale a exceso de tasa.** Productos con alto volumen de ventas como **Glacier 45L Backpack (Graphite) (OUT-00490)** (236 devoluciones sobre 6,155 vendidas, ~3.83 %) y **Summit Trail Runner (Sand) (OUT-00722)** (177 devoluciones sobre 4,412 vendidas, ~4.01 %) suman muchas líneas devueltas por escala comercial, pero se mantienen por debajo del promedio de su categoría; en contraste, **Canyon Dry Bag (Graphite) (OUT-00529)** (104 / 2,052, ~5.07 %), **Solstice Water Bottle (Sand) (OUT-00193)** (79 / 1,649, ~4.79 %) y **Tundra 45L Backpack (Ember) (OUT-00694)** (117 / 2,573, ~4.55 %) combinan volumen relevante con tasas superiores a su rubro.
+- **El cuadrante de riesgo sintetiza prioridades operativas.** **Tundra Hydration Pack (Moss) (OUT-00518)** destaca en la franja superior de utilidad con alto volumen de devolución, **Tundra 45L Backpack (Ember) (OUT-00694)**, **Solstice Water Bottle (Sand) (OUT-00193)** y referencias como **OUT-00448** y **OUT-00247** muestran utilidad relevante con brecha positiva frente a su categoría, y las burbujas en la zona inferior derecha reflejan productos de menor utilidad agregada con mayor presión relativa de devolución.
 
 
 
@@ -188,11 +187,11 @@ Margen calculado por orden sobre la venta neta (subtotal menos descuento), con c
 
 | Integrante | Parte del proyecto | Contribución |
 |---|---|---|
-| **Mario Alberto Pérez Ocampo** `[apellidos]` | Secciones 1, 2 y 3 | Planteamiento y descripción de los datos; carga, inventario y auditoría de tipos; estadística descriptiva, frecuencias, comparación por canal y categoría, y correlaciones. |
-| **Danna Paola Pérez Olalde** `[apellidos]` | Sección 4, primera parte | Llaves, nulos y decisión sobre `weight_kg`; atípicos con IQR; serie de tiempo, fechas, integridad y reglas de negocio, conclusión. |
-| **Irving Alfonso Aragón Aragón** `[apellidos]` | Sección 4, segunda parte | Auditorías financieras y de consistencia; filtro de pedidos de alto valor con el percentil 99.5; conclusión. |
-| **Ana Melissa Arenas Mendez** `[apellidos]` | Secciones 5 y 6, Eje 1 | Variables de margen, mapas de calor, gráfico de cascada y conclusiones sobre descuentos y envío gratis. |
-| **Alejandro Castillo De Gante** `[apellidos]` | Secciones 5 y 6, Eje 2 | Cálculo de utilidad por SKU, curva de Pareto del 80 %, gráficas 5 a 7 y conclusiones sobre devoluciones. |
+| **Mario Alberto Pérez Ocampo**  | Secciones 1, 2 y 3 | Planteamiento y descripción de los datos; carga, inventario y auditoría de tipos; estadística descriptiva, frecuencias, comparación por canal y categoría, y correlaciones. |
+| **Danna Paola Pérez Olalde**  | Sección 4, primera parte | Llaves, nulos y decisión sobre `weight_kg`; atípicos con IQR; serie de tiempo, fechas, integridad y reglas de negocio, conclusión. |
+| **Irving Alfonso Aragón Aragón** | Sección 4, segunda parte | Auditorías financieras y de consistencia; filtro de pedidos de alto valor con el percentil 99.5; conclusión. |
+| **Ana Melissa Arenas Mendez**  | Secciones 5 y 6, Eje 1 | Variables de margen, mapas de calor, gráfico de cascada y conclusiones sobre descuentos y envío gratis. |
+| **Alejandro Castillo De Gante**  | Secciones 5 y 6, Eje 2 | Cálculo de utilidad por SKU, curva de Pareto del 80 %, gráficas 5 a 7 y conclusiones sobre devoluciones. |
 
 
 ---
