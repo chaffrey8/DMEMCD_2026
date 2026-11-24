@@ -1,0 +1,94 @@
+fecha,sistema,total,dia_semana,tipo_dia
+2026-01-01,Metro,1016060,Jueves,Laboral
+2026-01-02,Metro,2819551,Viernes,Laboral
+2026-01-03,Metro,2815078,Sábado,Fin de semana
+2026-01-04,Metro,2136563,Domingo,Fin de semana
+2026-01-05,Metro,3712823,Lunes,Laboral
+2026-01-06,Metro,3243557,Martes,Laboral
+2026-01-07,Metro,3660137,Miércoles,Laboral
+2026-01-08,Metro,3673412,Jueves,Laboral
+2026-01-09,Metro,3859859,Viernes,Laboral
+2026-01-10,Metro,2817434,Sábado,Fin de semana
+2026-01-11,Metro,1788002,Domingo,Fin de semana
+2026-01-12,Metro,3669276,Lunes,Laboral
+2026-01-13,Metro,3647501,Martes,Laboral
+2026-01-14,Metro,3701194,Miércoles,Laboral
+2026-01-15,Metro,3729919,Jueves,Laboral
+2026-01-16,Metro,3818763,Viernes,Laboral
+2026-01-17,Metro,2980226,Sábado,Fin de semana
+2026-01-18,Metro,1872779,Domingo,Fin de semana
+2026-01-19,Metro,3710496,Lunes,Laboral
+2026-01-20,Metro,3734885,Martes,Laboral
+2026-01-21,Metro,3759042,Miércoles,Laboral
+2026-01-22,Metro,3780534,Jueves,Laboral
+2026-01-23,Metro,3848496,Viernes,Laboral
+2026-01-24,Metro,2981888,Sábado,Fin de semana
+2026-01-25,Metro,1896356,Domingo,Fin de semana
+2026-01-26,Metro,3732947,Lunes,Laboral
+2026-01-27,Metro,3767125,Martes,Laboral
+2026-01-28,Metro,3817629,Miércoles,Laboral
+2026-01-29,Metro,3850144,Jueves,Laboral
+2026-01-30,Metro,3980541,Viernes,Laboral
+2026-01-31,Metro,2966947,Sábado,Fin de semana
+2026-01-01,Metrobús,417479,Jueves,Laboral
+2026-01-02,Metrobús,1074115,Viernes,Laboral
+2026-01-03,Metrobús,996497,Sábado,Fin de semana
+2026-01-04,Metrobús,802530,Domingo,Fin de semana
+2026-01-05,Metrobús,1406954,Lunes,Laboral
+2026-01-06,Metrobús,1333373,Martes,Laboral
+2026-01-07,Metrobús,1426735,Miércoles,Laboral
+2026-01-08,Metrobús,1465419,Jueves,Laboral
+2026-01-09,Metrobús,1571789,Viernes,Laboral
+2026-01-10,Metrobús,1083201,Sábado,Fin de semana
+2026-01-11,Metrobús,758690,Domingo,Fin de semana
+2026-01-12,Metrobús,1519536,Lunes,Laboral
+2026-01-13,Metrobús,1510396,Martes,Laboral
+2026-01-14,Metrobús,1553073,Miércoles,Laboral
+2026-01-15,Metrobús,1551678,Jueves,Laboral
+2026-01-16,Metrobús,1541609,Viernes,Laboral
+2026-01-17,Metrobús,1109002,Sábado,Fin de semana
+2026-01-18,Metrobús,773580,Domingo,Fin de semana
+2026-01-19,Metrobús,1533115,Lunes,Laboral
+2026-01-20,Metrobús,1563254,Martes,Laboral
+2026-01-21,Metrobús,1568791,Miércoles,Laboral
+2026-01-22,Metrobús,1590783,Jueves,Laboral
+2026-01-23,Metrobús,1558163,Viernes,Laboral
+2026-01-24,Metrobús,1096148,Sábado,Fin de semana
+2026-01-25,Metrobús,804923,Domingo,Fin de semana
+2026-01-26,Metrobús,1497227,Lunes,Laboral
+2026-01-27,Metrobús,1582980,Martes,Laboral
+2026-01-28,Metrobús,1591648,Miércoles,Laboral
+2026-01-29,Metrobús,1581798,Jueves,Laboral
+2026-01-30,Metrobús,1613847,Viernes,Laboral
+2026-01-31,Metrobús,1113846,Sábado,Fin de semana
+2026-01-01,Ecobici,13106,Jueves,Laboral
+2026-01-02,Ecobici,33254,Viernes,Laboral
+2026-01-03,Ecobici,27206,Sábado,Fin de semana
+2026-01-04,Ecobici,30972,Domingo,Fin de semana
+2026-01-05,Ecobici,49613,Lunes,Laboral
+2026-01-06,Ecobici,50627,Martes,Laboral
+2026-01-07,Ecobici,56262,Miércoles,Laboral
+2026-01-08,Ecobici,56734,Jueves,Laboral
+2026-01-09,Ecobici,55214,Viernes,Laboral
+2026-01-10,Ecobici,34438,Sábado,Fin de semana
+2026-01-11,Ecobici,33461,Domingo,Fin de semana
+2026-01-12,Ecobici,56451,Lunes,Laboral
+2026-01-13,Ecobici,60737,Martes,Laboral
+2026-01-14,Ecobici,62237,Miércoles,Laboral
+2026-01-15,Ecobici,59049,Jueves,Laboral
+2026-01-16,Ecobici,56842,Viernes,Laboral
+2026-01-17,Ecobici,35460,Sábado,Fin de semana
+2026-01-18,Ecobici,35565,Domingo,Fin de semana
+2026-01-19,Ecobici,59612,Lunes,Laboral
+2026-01-20,Ecobici,61796,Martes,Laboral
+2026-01-21,Ecobici,58955,Miércoles,Laboral
+2026-01-22,Ecobici,61203,Jueves,Laboral
+2026-01-23,Ecobici,59136,Viernes,Laboral
+2026-01-24,Ecobici,36936,Sábado,Fin de semana
+2026-01-25,Ecobici,37514,Domingo,Fin de semana
+2026-01-26,Ecobici,59740,Lunes,Laboral
+2026-01-27,Ecobici,63977,Martes,Laboral
+2026-01-28,Ecobici,64545,Miércoles,Laboral
+2026-01-29,Ecobici,62517,Jueves,Laboral
+2026-01-30,Ecobici,59159,Viernes,Laboral
+2026-01-31,Ecobici,32860,Sábado,Fin de semana

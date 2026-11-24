@@ -1,0 +1,17 @@
+paso,tabla,variable,criterio,filas_afectadas,accion,limitacion
+D1,metro,linea,mojibake y 'Linea' sin acento según el periodo,1227915,estandarizar a 'Línea X',ninguna: es la misma línea
+D1,metro,estacion,mojibake y variantes de acentos/mayúsculas,396801,reparar codificación y unificar a la escritura con acentos y mayúsculas,la unificación supone que nombres iguales sin acentos son la misma estación
+D1,metrobus,linea,tres escrituras distintas según el periodo,6398,estandarizar a 'Línea X',ninguna
+D1,ingresos,tipo_ingreso,'QR/Validador' renombrado por la fuente en dic-2022,2916,unificar en 'QR/Validación',supone que el cambio fue solo de nombre y no de concepto de cobro
+D2,metro,afluencia,"estación-día con afluencia total 0 = sin servicio (cierres L12, incendio ene-2021, obras L1)",89292,conservar filas y crear bandera en_servicio; promedios 'típicos' solo con en_servicio=True,una estación abierta con 0 accesos reales sería clasificada como cerrada
+D3,ingresos,todas,duplicado exacto (carga repetida 2022-08-31),11,eliminar copia,ninguna: la fila es idéntica
+D3,ingresos,ingreso,"misma llave con dos valores (14,435 vs 0) dentro del bloque repetido",2,conservar el valor distinto de 0,supone que el 0 viene de la carga repetida; afecta 1 día de 1 línea
+D3,ingresos,ingreso,100 % de los faltantes son de L12: antes de su apertura (2012) o durante su cierre (2022),1067,no imputar; columna motivo_faltante; excluir cierres de L12 en comparaciones por línea,"no distingue entre 'no hubo ingreso' y 'no se registró', aunque el contexto indica lo primero"
+D4,ecobici,Genero_Usuario,'?' y faltante = el usuario no reportó género,49854,categoría explícita 'No especificado' (no imputar con la moda),las proporciones por género se calculan con y sin esta categoría
+D4,ecobici,Edad_Usuario,faltantes (79),79,no imputar; quedan fuera solo de los análisis por edad,pérdida mínima (<0.01 %)
+D4,ecobici,Edad_Usuario,IQR marca muchos adultos mayores legítimos; >90 años concentrado en 96 y 100,18,conservar; bandera edad_atipica; rangos de edad con pd.cut,"96 y 100 parecen valores por defecto del registro, pero no es confirmable"
+D4,ecobici,duracion_min,> 24 h: no es un viaje sino una bici no devuelta o error de cierre,31,excluir de análisis de duración (bandera duracion_imposible),algún viaje real muy largo podría quedar fuera
+D4,ecobici,Fecha_Retiro,viajes retirados antes de 2026-01-01 que cerraron en enero,105,excluir del análisis de enero (bandera fuera_de_periodo),el viaje de fin de año que cruza la medianoche del 31 de diciembre queda fuera
+D5,metro,tipo_pago,feb-2025: Gratuidad ≈ 87 % y Prepago ≈ 13 % en los 28 días y las 12 líneas (lo normal es al revés),10920,intercambiar las etiquetas Gratuidad/Prepago en ese mes; bandera tipo_pago_corregido,supone un error de captura de la fuente; el total de pasajeros no cambia
+T,metrobus,afluencia,"57 conteos con decimales (L4, Prepago, ene-2025), probablemente estimados",57,redondear al entero,el valor original pudo ser una estimación de la fuente
+T,historico,afluencia_*,números guardados como texto con comas de miles,18714,convertir a numérico,tarjeta/boleto faltan por estructura en organismos que no los distinguen; no se imputan
