@@ -33,7 +33,7 @@ El notebook incluye:
 │   ├── TSDEM.csv             ← personas del hogar (67,781 × 25)
 │   └── TMODULO.csv           ← persona elegida    (20,448 × 253)
 └── notebooks/
-    ├── ENSAFI_EDA.ipynb      ← análisis completo (código, resultados e interpretación)
+    ├── ENSAFI_EDA_final.ipynb      ← análisis completo (código, resultados e interpretación)
     └── salidas/              ← figuras y tablas que genera el notebook
         ├── eda/              ← 34 figuras del análisis exploratorio
         ├── pregunta_1/       ← figuras 1 a 4
@@ -71,13 +71,6 @@ Las figuras y tablas se regeneran en `notebooks/salidas/`.
 * **Google Colab:** suban los cuatro CSV al panel de archivos (o a una carpeta `data/`) y ejecuten todo. El notebook localiza los archivos automáticamente.
 * Los resultados son **deterministas**: el remuestreo de la pregunta 3 usa `np.random.seed(42)`, y los intervalos *bootstrap* de `sns.pointplot` usan `seed=42`.
 
-## Verificación de reproducibilidad
-
-El notebook se ejecutó de principio a fin en un entorno limpio (Python 3.13, pandas 3.0.5):
-
-* Las 68 celdas de código se ejecutaron **sin errores**.
-* Todas las cifras impresas coinciden **exactamente** con la ejecución original del equipo en Google Colab (pandas 2.x).
-* Dos ejecuciones consecutivas producen tablas y archivos CSV **idénticos**.
 
 ## Datos y licencia
 
