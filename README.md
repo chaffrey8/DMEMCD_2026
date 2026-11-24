@@ -8,9 +8,9 @@ Repositorio dedicado al análisis de la movilidad urbana y los flujos financiero
 ---
 
 ## Objetivos de Investigación
-- **¿Cómo impacta el tipo de pago (prepago vs. boleto/gratuidad) en la distribución diaria de pasajeros en las líneas del Metro y Metrobús?**
-- **¿Existe una relación estacional o semanal clara en los patrones de uso de Ecobici durante enero de 2026 según el género y la edad de los usuarios?**
-- **¿Cuál es la evolución y correlación entre los ingresos del Metro por tipo de boleto/tarifa y la afluencia total de usuarios a lo largo de los años?**
+- **P1. ¿Cómo se distribuye la afluencia del Metro y del Metrobús por tipo de pago (boleto, prepago y gratuidad), y cómo cambia esa distribución entre líneas, entre días laborales y fines de semana, y a lo largo del tiempo (2021–2026)?**
+- **P2. ¿Qué patrones de uso presenta Ecobici en enero de 2026 según género, edad y hora del día, y cómo se comparan con el histórico 2010–2024?**
+- **P3. ¿Cómo se relacionan los ingresos del Metro con su afluencia mensual en el periodo en que ambas bases coinciden (enero 2021 – julio 2023)?**
 
 
 ## Fuentes de información
@@ -21,16 +21,28 @@ Repositorio dedicado al análisis de la movilidad urbana y los flujos financiero
 ##  Equipo de Desarrollo
 - **Ricardo Martínez Corrales**
 - **Juan Ernesto Gallegos Juárez**
-- **Issac Martín Cerón García**
+- **Isaac Martín Cerón García**
 - **Leonardo Guerrero Mendoza**
 - **Arantxa Trinidad Alva Pacheco**
+
+
+## Registro de contribuciones
+| Integrante | Aportación |
+|---|---|
+| Arantxa Trinidad Alva Pacheco | Problemas de calidad y decisiones de limpieza o transformación |
+| Ricardo Martínez Corrales | Contexto del problema, descripción de los datos, preguntas de investigación |
+| Isaac Martín Cerón García | Manipulación, organización del código y reproducibilidad |
+| Leonardo Guerrero Mendoza | Estadística descriptiva y exploración |
+| Juan Ernesto Gallegos Juárez | Visualizaciones, hallazgos, conclusiones, limitaciones y líneas futuras |
+
+
 
 
 
 
 
 ## Comandos Git de referencia
-Para contribuir a nuestro proyecto, sigue estos pasos:
+Para contribuir al proyecto:
 1. Clona el repositorio con el comando: `git clone https://github.com/Juan-Gallegos7/Movilidad-Urbana-del-Sistema-de-Transporte-CDMX.git`.
 2. Ingresa a la carpeta del proyecto: `cd Movilidad-Urbana-del-Sistema-de-Transporte-CDMX`.
 3. Crea una nueva rama para tus cambios: `git branch rama-nombre`.
@@ -42,3 +54,19 @@ Los comandos más comunes que usarás son:
 - `git commit -m "Mensaje descriptivo` para hacer un commit con tu mensaje.
 - `git push origin rama-nombre` para subir tus cambios al repositorio remoto.
 
+
+## Instalación de librerías desde `requirements`
+En la terminal de VS Code (dentro de la carpeta del proyecto y con tu entorno activo):
+```bash
+pip install -r requirements_movilidad_cdmx.txt
+```
+
+
+## Cómo reproducir el análisis
+1. Clona el repositorio e instala las librerías como se indica arriba. Los datos ya vienen en la carpeta `Datasets/`.
+2. Abre `Final_Proyecto_Movilidad_CDMX.ipynb` en Jupyter o VS Code.
+3. Ejecuta todas las celdas en orden (**Run All**). El notebook encuentra solo la carpeta `Datasets/`; si los datos están en otro lugar, define la variable de entorno `MOVILIDAD_DATA_DIR` con su ruta.
+4. Al terminar, el notebook genera:
+   - `data/processed/`: datos limpios y bitácora de limpieza.
+   - `data/analitica/`: tablas para el análisis y bitácora de manipulación.
+   - `resultados/figuras/` y `resultados/tablas/`: gráficas y tablas de las decisiones de limpieza.
